@@ -7,6 +7,9 @@ var currentQuestion = document.getElementById("question");
 var choicesList = document.getElementById("choices");
 var result = document.getElementById("result");
 
+var qCounter = 0;
+var optionID = 1;
+
 const myQuestions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -71,61 +74,93 @@ function hideInstructions() {
     title.style.display = "none";
     instructions.style.display = "none";
     startButton.style.display = "none";
-    startQuiz(myQuestions);
+    showQuestion();
 };
 
-function startQuiz(questions) {
+function showQuestion() {
 
-    for (var i=0; i < questions.length; i++) {
-        // show current question
-        currentQuestion.textContent = questions[i].question;
+    // show current question
+    currentQuestion.textContent = myQuestions[qCounter].question;
 
-        // make and show current options/answers to choose from
-        var listItemEl = document.createElement("li");
-        listItemEl.className = "option";
-        listItemEl.textContent = questions[i].answers.a;
-        // add choice id as a custom attribute
-        listItemEl.setAttribute("data-option-id", "a");
+    // make and show current options/answers to choose from
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = myQuestions[qCounter].answers.a;
+    // add choice id as a custom attribute
+    listItemEl.setAttribute("data-option-id", optionID);
 
-        choicesList.appendChild(listItemEl);
+    choicesList.appendChild(listItemEl);
+    listItemEl.addEventListener("click", isCorrect);
+    optionID++;
 
-        var listItemEl = document.createElement("li");
-        listItemEl.className = "option";
-        listItemEl.textContent = questions[i].answers.b;
-        // add choice id as a custom attribute
-        listItemEl.setAttribute("data-option-id", "b");
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = myQuestions[qCounter].answers.b;
+    // add choice id as a custom attribute
+    listItemEl.setAttribute("data-option-id", optionID);
 
-        choicesList.appendChild(listItemEl);
+    choicesList.appendChild(listItemEl);
+    listItemEl.addEventListener("click", isCorrect);
+    optionID++;
 
-        var listItemEl = document.createElement("li");
-        listItemEl.className = "option";
-        listItemEl.textContent = questions[i].answers.c;
-        // add choice id as a custom attribute
-        listItemEl.setAttribute("data-option-id", "c");
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = myQuestions[qCounter].answers.c;
+    // add choice id as a custom attribute
+    listItemEl.setAttribute("data-option-id", optionID);
 
-        choicesList.appendChild(listItemEl);
+    choicesList.appendChild(listItemEl);
+    listItemEl.addEventListener("click", isCorrect);
+    optionID++;
 
-        var listItemEl = document.createElement("li");
-        listItemEl.className = "option";
-        listItemEl.textContent = questions[i].answers.d;
-        // add choice id as a custom attribute
-        listItemEl.setAttribute("data-option-id", "d");
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = myQuestions[qCounter].answers.d;
+    // add choice id as a custom attribute
+    listItemEl.setAttribute("data-option-id", optionID);
 
-        choicesList.appendChild(listItemEl);
+    choicesList.appendChild(listItemEl);
+    listItemEl.addEventListener("click", isCorrect);
+    optionID++;
 
-        //// TESTING ////
-        console.log(choicesList);
+    //// TESTING ///////////////////////
+    console.log(choicesList);
 
-        if (i === 0) {
-            break;
-        }
-        //////////////////
 
+    // if answer is correct, say "correct"
+    // else, say "wrong" AND subtract 10 seconds off of the timer/score
+    // no matter what the user picks, go to next question
+
+    // after the last question is answered OR if the timer
+    // gets to 0 -> go to the Final Score display (game over)
+
+    //////////////////////////////////////////////////////////
+
+};
+
+function isCorrect(event) {
+
+    // get target element from event
+    var targetEl = event.target;
+    console.log(event.target);
+
+    if (true) {
+        console.log("correct!");
+    }
+    else {
+        console.log("wrong! subtracting 10 seconds off of timer/score...");
     }
 
-};
+    qCounter++;
 
-function isCorrect() {
+    console.log(qCounter);
+
+    if (qCounter < 5) {
+        showQuestion();
+    }
+    else {
+        console.log("end of quiz!");
+    }
 
 };
 
