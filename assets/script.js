@@ -87,41 +87,37 @@ function showQuestion() {
     listItemEl.className = "option";
     listItemEl.textContent = myQuestions[qCounter].answers.a;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", optionID);
+    listItemEl.setAttribute("data-option-id", "a");
 
     choicesList.appendChild(listItemEl);
     listItemEl.addEventListener("click", isCorrect);
-    optionID++;
 
     var listItemEl = document.createElement("li");
     listItemEl.className = "option";
     listItemEl.textContent = myQuestions[qCounter].answers.b;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", optionID);
+    listItemEl.setAttribute("data-option-id", "b");
 
     choicesList.appendChild(listItemEl);
     listItemEl.addEventListener("click", isCorrect);
-    optionID++;
 
     var listItemEl = document.createElement("li");
     listItemEl.className = "option";
     listItemEl.textContent = myQuestions[qCounter].answers.c;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", optionID);
+    listItemEl.setAttribute("data-option-id", "c");
 
     choicesList.appendChild(listItemEl);
     listItemEl.addEventListener("click", isCorrect);
-    optionID++;
 
     var listItemEl = document.createElement("li");
     listItemEl.className = "option";
     listItemEl.textContent = myQuestions[qCounter].answers.d;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", optionID);
+    listItemEl.setAttribute("data-option-id", "d");
 
     choicesList.appendChild(listItemEl);
     listItemEl.addEventListener("click", isCorrect);
-    optionID++;
 
     //// TESTING ///////////////////////
     console.log(choicesList);
@@ -142,9 +138,8 @@ function isCorrect(event) {
 
     // get target element from event
     var targetEl = event.target;
-    console.log(event.target);
 
-    if (true) {
+    if (targetEl.getAttribute("data-option-id") === myQuestions[qCounter].correctAnswer) {
         console.log("correct!");
     }
     else {
