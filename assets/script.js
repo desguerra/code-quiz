@@ -20,6 +20,12 @@ listItemEl4.className = "option";
 var doneContent = document.getElementById("done-content");
 var finalScoreMsg = document.createElement("p");
 var initialsForm = document.createElement("form");
+var highScoresList = document.createElement("ol");
+highScoresList.className = "choices";
+var newScore = document.createElement("li");
+
+// var goBackButton = document.createElement("button");
+// var clearScoresButton = document.createElement("button");
 
 var qCounter = 0; // question counter
 var optionID = 1; // id ffor each option/choice
@@ -198,8 +204,17 @@ function addToScores() {
     result.style.display = "none";
 
     // add score to scoreboard
-    // display scoreboard
     console.log("testing scores list!!");
+
+    // display scoreboard
+    question.textContent = "High Scores";
+    doneContent.textContent = "";
+
+    newScore.textContent = "[name] - [score]";
+
+    highScoresList.appendChild(newScore);
+    doneContent.appendChild(highScoresList);
+
 }
 
 startButton.addEventListener("click", hideInstructions);
