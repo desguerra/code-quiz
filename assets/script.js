@@ -62,12 +62,14 @@ const myQuestions = [
 
 function setUp() {
     title.textContent = "Coding Quiz Challenge";
-    instructions.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+    instructions.textContent = "Try to answer the following JavaScript-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
 };
 
 function hideInstructions() {
     title.textContent = "";
     instructions.textContent = "";
+    title.style.display = "none";
+    instructions.style.display = "none";
     startButton.style.display = "none";
     startQuiz(myQuestions);
 };
@@ -75,36 +77,55 @@ function hideInstructions() {
 function startQuiz(questions) {
 
     for (var i=0; i < questions.length; i++) {
-        console.log("hello!")
+        // show current question
+        currentQuestion.textContent = questions[i].question;
+
+        // make and show current options/answers to choose from
+        var listItemEl = document.createElement("li");
+        listItemEl.className = "option";
+        listItemEl.textContent = questions[i].answers.a;
+        // add choice id as a custom attribute
+        listItemEl.setAttribute("data-option-id", "a");
+
+        choicesList.appendChild(listItemEl);
+
+        var listItemEl = document.createElement("li");
+        listItemEl.className = "option";
+        listItemEl.textContent = questions[i].answers.b;
+        // add choice id as a custom attribute
+        listItemEl.setAttribute("data-option-id", "b");
+
+        choicesList.appendChild(listItemEl);
+
+        var listItemEl = document.createElement("li");
+        listItemEl.className = "option";
+        listItemEl.textContent = questions[i].answers.c;
+        // add choice id as a custom attribute
+        listItemEl.setAttribute("data-option-id", "c");
+
+        choicesList.appendChild(listItemEl);
+
+        var listItemEl = document.createElement("li");
+        listItemEl.className = "option";
+        listItemEl.textContent = questions[i].answers.d;
+        // add choice id as a custom attribute
+        listItemEl.setAttribute("data-option-id", "d");
+
+        choicesList.appendChild(listItemEl);
+
+        //// TESTING ////
+        console.log(choicesList);
+
+        if (i === 0) {
+            break;
+        }
+        //////////////////
+
     }
 
-    // show current question
-    currentQuestion.textContent = questions[0].question;
+};
 
-    // make and show current options/answers to choose from
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = questions[0].answers.a;
-
-    choicesList.appendChild(listItemEl);
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = questions[0].answers.b;
-
-    choicesList.appendChild(listItemEl);
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = questions[0].answers.c;
-
-    choicesList.appendChild(listItemEl);
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = questions[0].answers.d;
-
-    choicesList.appendChild(listItemEl);
+function isCorrect() {
 
 };
 

@@ -7,22 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz</title>
 
+    <!-- MY STYLE SHEET -->
     <link rel="stylesheet" href="./assets/style.css">
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <!-- HEADER -->
     <header>
-        <p>
-            [View High Scores + Timer]
-        </p>
+        <nav>
+            <a href="#">View High Scores</a>
+        </nav>
+
+        <p id="timer">Timer</p>
     </header>
 
     <!-- MAIN SECTION -->
     <main>
 
-        <section>
+        <section class="start-section">
 
             <h1 id="title"></h1>
 
@@ -34,7 +41,7 @@
 
         <section class="quiz-container">
 
-            <h1 class="question" id="question"></h1>
+            <h2 class="question" id="question"></h2>
 
             <ol class="choices" id="choices"></ol>
 
