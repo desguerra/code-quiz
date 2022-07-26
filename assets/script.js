@@ -6,6 +6,7 @@ var currentQuestion = document.getElementById("question");
 // list ol that displays answer choices
 var choicesList = document.getElementById("choices");
 var result = document.getElementById("result");
+result.className = "result";
 
 var listItemEl1 = document.createElement("li");
 listItemEl1.className = "option";
@@ -15,6 +16,10 @@ var listItemEl3 = document.createElement("li");
 listItemEl3.className = "option";
 var listItemEl4 = document.createElement("li");
 listItemEl4.className = "option";
+
+var doneContent = document.getElementById("done-content");
+var finalScoreMsg = document.createElement("p");
+var initialsForm = document.createElement("form");
 
 var qCounter = 0; // question counter
 var optionID = 1; // id ffor each option/choice
@@ -87,6 +92,7 @@ function hideInstructions() {
 };
 
 function showQuestion() {
+
     // show current question
     currentQuestion.textContent = myQuestions[qCounter].question;
 
@@ -140,9 +146,13 @@ function isCorrect(event) {
     var userAnswer = targetEl.getAttribute("data-option-id");
 
     if (userAnswer === myQuestions[qCounter].correctAnswer) {
+        result.textContent = "Correct!";
+        result.className = "result result-show";
         console.log("correct!");
     }
     else {
+        result.textContent = "Wrong!";
+        result.className = "result result-show";
         console.log("wrong! subtracting 10 seconds off of timer/score...");
         // TODO: add code for timer
     }
@@ -156,11 +166,44 @@ function isCorrect(event) {
     }
     else {
         console.log("end of quiz!");
-        // show end of quiz display
+        endOfQuiz();
     }
 
 };
 
+function endOfQuiz() {
+    choices.textContent = "";
+    choices.style.display = "none";
+
+    // display end of quiz results
+    question.textContent = "All done!";
+    finalScoreMsg.textContent = "Your final score is [timer value].";
+    doneContent.appendChild(finalScoreMsg);
+
+    initialsForm.innerHTML = '<label for="initials">Enter initials:</label> <input type="text" id="initials" name="initials"> <button type="submit" class="btn submit-btn" id="submit-button">Submit</button>';
+    // enterInit.textContent = "Enter initials: ";
+    // initialsForm.appendChild(enterInit);
+
+    // initialsForm.appendChild(textbox);
+    // initialsForm.appendChild(submitButton);
+
+    doneContent.appendChild(initialsForm);
+
+    var submitButton = document.getElementById("submit-button");
+    submitButton.addEventListener("click", addToScores);
+};
+
+function addToScores() {
+    // make sure to hide result text
+    result.style.display = "none";
+
+    // add score to scoreboard
+    // display scoreboard
+    console.log("testing scores list!!");
+}
+
 startButton.addEventListener("click", hideInstructions);
 
 setUp();
+
+// TODO: make results disappear after 2000 ms?
