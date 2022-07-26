@@ -7,8 +7,17 @@ var currentQuestion = document.getElementById("question");
 var choicesList = document.getElementById("choices");
 var result = document.getElementById("result");
 
-var qCounter = 0;
-var optionID = 1;
+var listItemEl1 = document.createElement("li");
+listItemEl1.className = "option";
+var listItemEl2 = document.createElement("li");
+listItemEl2.className = "option";
+var listItemEl3 = document.createElement("li");
+listItemEl3.className = "option";
+var listItemEl4 = document.createElement("li");
+listItemEl4.className = "option";
+
+var qCounter = 0; // question counter
+var optionID = 1; // id ffor each option/choice
 
 const myQuestions = [
     {
@@ -78,50 +87,40 @@ function hideInstructions() {
 };
 
 function showQuestion() {
-
     // show current question
     currentQuestion.textContent = myQuestions[qCounter].question;
 
-    // make and show current options/answers to choose from
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = myQuestions[qCounter].answers.a;
+    // show current options/answers to choose from //
+
+    listItemEl1.textContent = myQuestions[qCounter].answers.a;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", "a");
+    listItemEl1.setAttribute("data-option-id", "a");
+    choicesList.appendChild(listItemEl1);
+    listItemEl1.addEventListener("click", isCorrect);
 
-    choicesList.appendChild(listItemEl);
-    listItemEl.addEventListener("click", isCorrect);
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = myQuestions[qCounter].answers.b;
+    
+    listItemEl2.textContent = myQuestions[qCounter].answers.b;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", "b");
+    listItemEl2.setAttribute("data-option-id", "b");
+    choicesList.appendChild(listItemEl2);
+    listItemEl2.addEventListener("click", isCorrect);
 
-    choicesList.appendChild(listItemEl);
-    listItemEl.addEventListener("click", isCorrect);
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = myQuestions[qCounter].answers.c;
+    
+    listItemEl3.textContent = myQuestions[qCounter].answers.c;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", "c");
+    listItemEl3.setAttribute("data-option-id", "c");
+    choicesList.appendChild(listItemEl3);
+    listItemEl3.addEventListener("click", isCorrect);
 
-    choicesList.appendChild(listItemEl);
-    listItemEl.addEventListener("click", isCorrect);
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "option";
-    listItemEl.textContent = myQuestions[qCounter].answers.d;
+    
+    listItemEl4.textContent = myQuestions[qCounter].answers.d;
     // add choice id as a custom attribute
-    listItemEl.setAttribute("data-option-id", "d");
-
-    choicesList.appendChild(listItemEl);
-    listItemEl.addEventListener("click", isCorrect);
+    listItemEl4.setAttribute("data-option-id", "d");
+    choicesList.appendChild(listItemEl4);
+    listItemEl4.addEventListener("click", isCorrect);
 
     //// TESTING ///////////////////////
     console.log(choicesList);
-
 
     // if answer is correct, say "correct"
     // else, say "wrong" AND subtract 10 seconds off of the timer/score
@@ -138,23 +137,26 @@ function isCorrect(event) {
 
     // get target element from event
     var targetEl = event.target;
+    var userAnswer = targetEl.getAttribute("data-option-id");
 
-    if (targetEl.getAttribute("data-option-id") === myQuestions[qCounter].correctAnswer) {
+    if (userAnswer === myQuestions[qCounter].correctAnswer) {
         console.log("correct!");
     }
     else {
         console.log("wrong! subtracting 10 seconds off of timer/score...");
+        // TODO: add code for timer
     }
 
     qCounter++;
 
     console.log(qCounter);
 
-    if (qCounter < 5) {
+    if (qCounter < 5) { // AND if timer > 0
         showQuestion();
     }
     else {
         console.log("end of quiz!");
+        // show end of quiz display
     }
 
 };
