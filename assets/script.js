@@ -69,17 +69,40 @@ function hideInstructions() {
     title.textContent = "";
     instructions.textContent = "";
     startButton.style.display = "none";
-    startQuiz();
+    startQuiz(myQuestions);
 };
 
-function startQuiz() {
+function startQuiz(questions) {
+
+    for (var i=0; i < questions.length; i++) {
+        console.log("hello!")
+    }
+
     // show current question
-    currentQuestion.textContent = "Question 1";
+    currentQuestion.textContent = questions[0].question;
+
+    // make and show current options/answers to choose from
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = questions[0].answers.a;
+
+    choicesList.appendChild(listItemEl);
 
     var listItemEl = document.createElement("li");
     listItemEl.className = "option";
+    listItemEl.textContent = questions[0].answers.b;
 
-    listItemEl.textContent = "answer option 1";
+    choicesList.appendChild(listItemEl);
+
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = questions[0].answers.c;
+
+    choicesList.appendChild(listItemEl);
+
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "option";
+    listItemEl.textContent = questions[0].answers.d;
 
     choicesList.appendChild(listItemEl);
 
