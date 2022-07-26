@@ -3,9 +3,62 @@ var instructions = document.getElementById("instructions");
 var startButton = document.getElementById("start-game");
 
 var currentQuestion = document.getElementById("question");
-// list ul that displays answer choices
+// list ol that displays answer choices
 var choicesList = document.getElementById("choices");
 var result = document.getElementById("result");
+
+const myQuestions = [
+    {
+        question: "Commonly used data types DO NOT include:",
+        answers: {
+            a: "strings",
+            b: "booleans",
+            c: "alerts",
+            d: "numbers"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "The condition in an if / else statement is enclosed with _______.",
+        answers: {
+            a: "quotes",
+            b: "curly brackets",
+            c: "parenthesis",
+            d: "square brackets"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Arrays in JavaScript can be used to store _______.",
+        answers: {
+            a: "numbers and strings",
+            b: "other arrays",
+            c: "booleans",
+            d: "all of the above"
+        },
+        correctAnswer: "d"
+    },
+    {
+        question: "String values must be enclosed within _______ when being assigned to variables.",
+        answers: {
+            a: "quotes",
+            b: "curly brackets",
+            c: "commas",
+            d: "parenthesis"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        answers: {
+            a: "JavaScript",
+            b: "terminal/bash",
+            c: "for loops",
+            d: "console.log"
+        },
+        correctAnswer: "d"
+    }
+];
 
 function setUp() {
     title.textContent = "Coding Quiz Challenge";
@@ -24,7 +77,7 @@ function startQuiz() {
     currentQuestion.textContent = "Question 1";
 
     var listItemEl = document.createElement("li");
-    listItemEl.className = "";
+    listItemEl.className = "option";
 
     listItemEl.textContent = "answer option 1";
 
