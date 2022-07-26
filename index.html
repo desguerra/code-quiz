@@ -6,17 +6,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz</title>
+
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
 
     <!-- HEADER -->
     <header>
-
+        <p>
+            [View High Scores + Timer]
+        </p>
     </header>
 
     <!-- MAIN SECTION -->
     <main>
+
+        <section>
+
+            <h1 id="title"></h1>
+
+            <p id="instructions"></p>
+
+            <button class="btn" id="start-game" type="submit">Start Quiz</button>
+
+        </section>
+
+        <section class="quiz-container">
+
+            <h1 class="question" id="question"></h1>
+
+            <ul class="choices" id="choices"></ul>
+
+            <div class="result" id="result"></div>
+        
+        </section>
 
     </main>
 
@@ -24,6 +48,8 @@
     <footer>
 
     </footer>
+
+    <script src="./assets/script.js"></script>
     
 </body>
 
