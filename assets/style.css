@@ -100,3 +100,16 @@ section p {
     padding: 2px 15px;
     border-radius: 8px;
 }
+/* MEDIA QUERY FOR TABLETS AND LARGER */
+@media screen and (min-width: 575px) {
+    section {
+        width: 65%;
+    }
+}
+
+/* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND LARGER */
+@media screen and (min-width: 768px) {
+    section {
+        width: 50%;
+    }
+}
