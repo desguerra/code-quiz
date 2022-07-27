@@ -1,3 +1,5 @@
+var timerEl = document.getElementById("timer");
+
 var title = document.getElementById("title");
 var instructions = document.getElementById("instructions");
 var startButton = document.getElementById("start-game");
@@ -28,7 +30,9 @@ var newScore = document.createElement("li");
 // var clearScoresButton = document.createElement("button");
 
 var qCounter = 0; // question counter
-var optionID = 1; // id ffor each option/choice
+var optionID = 1; // id for each option/choice
+var timeLeft = 50; // start timer at 50
+var gameEnded = false; // if game is over, then `true`
 
 const myQuestions = [
     {
@@ -83,6 +87,27 @@ const myQuestions = [
     }
 ];
 
+/* FUNCTIONS */
+function countdown() {
+    
+    var timeInterval = setInterval(function () {
+        if (timeLeft > 1 && gameEnded) {
+            timerEl.textContent = "Time left: " + timeLeft;
+        }
+        else if (timeLeft > 1) {
+            // TODO: if timer is greater than 1 AND if game ended
+            timerEl.textContent = "Time left: " + timeLeft;
+            timeLeft--;
+        } // otherwise, if there is no time left, don't display the timer and cancel the timer
+        else {
+            timerEl.textContent = "";
+            gameEnded = true;
+            endOfQuiz();
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+};
+
 function setUp() {
     title.textContent = "Coding Quiz Challenge";
     instructions.textContent = "Try to answer the following JavaScript-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
@@ -94,6 +119,8 @@ function hideInstructions() {
     title.style.display = "none";
     instructions.style.display = "none";
     startButton.style.display = "none";
+
+    countdown();
     showQuestion();
 };
 
@@ -154,66 +181,81 @@ function isCorrect(event) {
     if (userAnswer === myQuestions[qCounter].correctAnswer) {
         result.textContent = "Correct!";
         result.className = "result result-show";
+
         console.log("correct!");
     }
     else {
         result.textContent = "Wrong!";
         result.className = "result result-show";
-        console.log("wrong! subtracting 10 seconds off of timer/score...");
-        // TODO: add code for timer
+        timeLeft -= 10;
+
+        console.log("wrong! subtracted 10 off of score/timer...");
     }
 
     qCounter++;
 
-    console.log(qCounter);
-
-    if (qCounter < 5) { // AND if timer > 0
+    if (qCounter < 5 && timeLeft > 0) {
         showQuestion();
     }
     else {
-        console.log("end of quiz!");
+        gameEnded = true;
         endOfQuiz();
     }
 
 };
 
 function endOfQuiz() {
+    console.log("end of quiz!");
+
+    localStorage.setItem("playerTime", timeLeft);
+    var scoreInStorage = localStorage.getItem("playerTime");
+
     choices.textContent = "";
     choices.style.display = "none";
 
     // display end of quiz results
     question.textContent = "All done!";
-    finalScoreMsg.textContent = "Your final score is [timer value].";
+
+    finalScoreMsg.textContent = "Your final score is " + scoreInStorage + ".";
     doneContent.appendChild(finalScoreMsg);
 
     initialsForm.innerHTML = '<label for="initials">Enter initials:</label> <input type="text" id="initials" name="initials"> <button type="submit" class="btn submit-btn" id="submit-button">Submit</button>';
-    // enterInit.textContent = "Enter initials: ";
-    // initialsForm.appendChild(enterInit);
-
-    // initialsForm.appendChild(textbox);
-    // initialsForm.appendChild(submitButton);
 
     doneContent.appendChild(initialsForm);
 
     var submitButton = document.getElementById("submit-button");
-    submitButton.addEventListener("click", addToScores);
+    submitButton.addEventListener("click", handleAddToScores);
 };
 
-function addToScores() {
-    // make sure to hide result text
-    result.style.display = "none";
+function handleAddToScores(event) {
+
+    event.preventDefault();
 
     // add score to scoreboard
-    console.log("testing scores list!!");
+    console.log("HIGH SCORES LIST");
 
-    // display scoreboard
-    question.textContent = "High Scores";
     doneContent.textContent = "";
 
-    newScore.textContent = "[name] - [score]";
+    ///// if adding new score, add - otherwise, just display high scores (continue)
+    // select `input` text tag with name="initials" and grab the value
+    // var initialsInput = document.querySelector("input[name='initials']").value;
+    // console.log(initialsInput);
+
+    // TODO: create object for each player (name and score), and store in localStorage
+
+    newScore.textContent = "[name] - " + localStorage.getItem("playerTime");
 
     highScoresList.appendChild(newScore);
     doneContent.appendChild(highScoresList);
+
+    ////// display scoreboard //
+    // make sure to hide result text
+    result.style.display = "none";
+    question.textContent = "High Scores";
+
+    // show scoreboard from local storage in doneContent
+    // doneContent = high scores in order
+    
 
 }
 
