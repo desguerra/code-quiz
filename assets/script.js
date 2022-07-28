@@ -23,8 +23,8 @@ listItemEl4.className = "option";
 var doneContent = document.getElementById("done-content");
 var finalScoreMsg = document.createElement("p");
 var initialsForm = document.createElement("form");
-var highScoresList = document.createElement("ol");
-highScoresList.className = "choices";
+var highScoresList = document.createElement("ul");
+highScoresList.className = "high-scores";
 // var newScore = document.createElement("li");
 
 var buttonDiv = document.createElement("div");
@@ -252,20 +252,23 @@ function handleAddToScores(event) {
 
     // store initials and score in localStorage
     // select `input` text tag with name="initials" and grab the value (user input initials)
-    var inputInitials = document.querySelector("input[name='initials']").value;
+    if (document.querySelector("input[name='initials']").value) {
+        var inputInitials = document.querySelector("input[name='initials']").value;
     
-    if (localStorage.getItem("scores")) {
-        var scoresArr = localStorage.getItem("scores");
+        if (localStorage.getItem("scores")) {
+            var scoresArr = localStorage.getItem("scores");
+        }
+        else {
+            var scoresArr = [];
+        }
+
+        var newScore = inputInitials + " - " + timeLeft;
+
+        localStorage.setItem("scores", [...[scoresArr], newScore]);
+
+        displayScoreboard();
     }
-    else {
-        var scoresArr = [];
-    }
-
-    var newScore = inputInitials + " - " + timeLeft;
-
-    localStorage.setItem("scores", [...[scoresArr], newScore]);
-
-    displayScoreboard();
+    
 
 };
 
@@ -301,17 +304,11 @@ function displayScoreboard() {
         console.log("currently, no high scores!");
     }
 
-    
-    //newScore.textContent = localStorage.getItem("scores");
-    // highScoresList.appendChild(newScore);
-
     // doneContent = list of high scores in order
 
 
-    // TODO: show "go back" and "clear high scores" buttons
+    // show "go back" and "clear high scores" buttons
     buttonDiv.innerHTML = '<button type="button" class="btn submit-btn" id="go-back-button">Go Back</button> <button type="button" class="btn submit-btn" id="clear-button">Clear high scores</button>';
-    //document.getElementById("go-back-button");
-    //document.getElementById("clear-button");
     doneContent.appendChild(buttonDiv);
 
     var goBackButton = document.getElementById("go-back-button");
