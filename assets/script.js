@@ -88,6 +88,8 @@ const myQuestions = [
 ];
 
 /* FUNCTIONS */
+
+/* countdown timer function */
 function countdown() {
     
     var timeInterval = setInterval(function () {
@@ -108,11 +110,13 @@ function countdown() {
     }, 1000);
 };
 
+/* function to initialize/set up page on first load */
 function setUp() {
     title.textContent = "Coding Quiz Challenge";
     instructions.textContent = "Try to answer the following JavaScript-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
 };
 
+/* hide instructions before showing first question */
 function hideInstructions() {
     title.textContent = "";
     instructions.textContent = "";
@@ -124,6 +128,7 @@ function hideInstructions() {
     showQuestion();
 };
 
+/* show one question at a time */
 function showQuestion() {
 
     // show current question
@@ -172,6 +177,7 @@ function showQuestion() {
 
 };
 
+/* check if user's choice is the correct answer */
 function isCorrect(event) {
 
     // get target element from event
@@ -204,6 +210,7 @@ function isCorrect(event) {
 
 };
 
+/* when the game ends, show player score and ask them to input their initials */
 function endOfQuiz() {
     console.log("end of quiz!");
 
@@ -223,10 +230,14 @@ function endOfQuiz() {
 
     doneContent.appendChild(initialsForm);
 
+    console.log(initialsForm);
+    console.log(document.querySelector("input[name='initials']").value);
+
     var submitButton = document.getElementById("submit-button");
     submitButton.addEventListener("click", handleAddToScores);
 };
 
+/* add scores to high score list */
 function handleAddToScores(event) {
 
     event.preventDefault();
@@ -240,6 +251,8 @@ function handleAddToScores(event) {
     // select `input` text tag with name="initials" and grab the value
     // var initialsInput = document.querySelector("input[name='initials']").value;
     // console.log(initialsInput);
+
+    //console.log(document.querySelector("input[name='initials']").value);
 
     // TODO: create object for each player (name and score), and store in localStorage
 
@@ -255,12 +268,11 @@ function handleAddToScores(event) {
 
     // show scoreboard from local storage in doneContent
     // doneContent = high scores in order
-    
 
-}
+};
 
+
+// start quiz when user clicks the start button
 startButton.addEventListener("click", hideInstructions);
 
 setUp();
-
-// TODO: make results disappear after 2000 ms?
