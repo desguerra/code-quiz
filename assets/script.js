@@ -270,6 +270,7 @@ function handleAddToScores(event) {
 };
 
 function displayScoreboard() {
+    scoresLinkEl.style.display = "none";
     gameEnded = true;
     // add score to scoreboard
     console.log("HIGH SCORES LIST");
