@@ -27,8 +27,9 @@ var highScoresList = document.createElement("ol");
 highScoresList.className = "choices";
 var newScore = document.createElement("li");
 
-// var goBackButton = document.createElement("button");
-// var clearScoresButton = document.createElement("button");
+var buttonDiv = document.createElement("div");
+var goBackButton = document.createElement("button");
+var clearScoresButton = document.createElement("button");
 
 var qCounter = 0; // question counter
 var optionID = 1; // id for each option/choice
@@ -113,6 +114,9 @@ function countdown() {
 
 /* function to initialize/set up page on first load */
 function setUp() {
+    title.style.display = "inherit";
+    instructions.style.display = "inherit";
+    startButton.style.display = "inline";
     title.textContent = "Coding Quiz Challenge";
     instructions.textContent = "Try to answer the following JavaScript-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
 };
@@ -249,21 +253,19 @@ function handleAddToScores(event) {
 
     // TODO: create object for each player (name and score), and store in localStorage
 
-    ///// if adding new score, add - otherwise, just display high scores (continue)
-    // select `input` text tag with name="initials" and grab the value
-    // var initialsInput = document.querySelector("input[name='initials']").value;
-    // console.log(initialsInput);
+    // if adding new score, add to local stoarage
+    // select `input` text tag with name="initials" and grab the value (user input initials)
+    if (document.querySelector("input[name='initials']").value) {
+        var inputInitials = document.querySelector("input[name='initials']").value;
+        localStorage.setItem("initials", inputInitials);
 
-    //console.log(document.querySelector("input[name='initials']").value);
-
-    
-
-
-    displayScoreboard();
+        displayScoreboard();
+    }
 
 };
 
 function displayScoreboard() {
+    gameEnded = true;
     // add score to scoreboard
     console.log("HIGH SCORES LIST");
 
@@ -278,14 +280,48 @@ function displayScoreboard() {
     question.textContent = "High Scores";
 
     // get initials and score from local storage
-    newScore.textContent = "[name] - " + localStorage.getItem("playerTime");
+    newScore.textContent = localStorage.getItem("initials") + " - " + localStorage.getItem("playerTime");
 
+    // TODO: DISPLAY ALL SCORES IN LOCAL STORAGE SO FAR
     // show scoreboard from local storage in doneContent
     // doneContent = high scores in order
     highScoresList.appendChild(newScore);
     doneContent.appendChild(highScoresList);
 
-    // TODO: DISPLAY ALL SCORES IN LOCAL STORAGE SO FAR
+
+    // TODO: show "go back" and "clear high scores" buttons
+    buttonDiv.innerHTML = '<button type="button" class="btn submit-btn" id="go-back-button">Go Back</button> <button type="button" class="btn submit-btn" id="clear-button">Clear high scores</button>';
+    //document.getElementById("go-back-button");
+    //document.getElementById("clear-button");
+    doneContent.appendChild(buttonDiv);
+
+    var goBackButton = document.getElementById("go-back-button");
+    var clearScoresButton = document.getElementById("clear-button");
+
+    // click to restart the game
+    goBackButton.addEventListener("click", restartQuiz);
+
+    // click to clear data from localStorage
+    clearScoresButton.addEventListener("click", clearStorage);
+
+};
+
+function restartQuiz() {
+    location.reload();
+};
+
+function clearStorage(event) {
+    event.preventDefault();
+
+    var confirmMsg = window.confirm("Are you sure you want to clear all high scores?");
+    if (confirmMsg) {
+        localStorage.clear();
+        restartQuiz();
+    }
+    else {
+        window.alert("High scores not cleared!");
+    }
+    
 };
 
 
@@ -293,6 +329,6 @@ function displayScoreboard() {
 startButton.addEventListener("click", hideInstructions);
 
 // click to view high scores
-scoresLinkEl.addEventListener("click", handleAddToScores);
+scoresLinkEl.addEventListener("click", displayScoreboard);
 
 setUp();
