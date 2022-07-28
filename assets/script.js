@@ -25,7 +25,7 @@ var finalScoreMsg = document.createElement("p");
 var initialsForm = document.createElement("form");
 var highScoresList = document.createElement("ol");
 highScoresList.className = "choices";
-var newScore = document.createElement("li");
+// var newScore = document.createElement("li");
 
 var buttonDiv = document.createElement("div");
 var goBackButton = document.createElement("button");
@@ -221,8 +221,8 @@ function endOfQuiz() {
 
     console.log("end of quiz!");
 
-    localStorage.setItem("playerTime", timeLeft);
-    var scoreInStorage = localStorage.getItem("playerTime");
+    // localStorage.setItem("playerTime", timeLeft);
+    // var scoreInStorage = localStorage.getItem("playerTime");
 
     choices.textContent = "";
     choices.style.display = "none";
@@ -230,7 +230,7 @@ function endOfQuiz() {
     // display end of quiz results
     question.textContent = "All done!";
 
-    finalScoreMsg.textContent = "Your final score is " + scoreInStorage + ".";
+    finalScoreMsg.textContent = "Your final score is " + timeLeft + ".";
     doneContent.appendChild(finalScoreMsg);
 
     initialsForm.innerHTML = '<label for="initials">Enter initials:</label> <input type="text" id="initials" name="initials"> <button type="submit" class="btn submit-btn" id="submit-button">Submit</button>';
@@ -248,19 +248,24 @@ function endOfQuiz() {
 function handleAddToScores(event) {
 
     event.preventDefault();
-
     gameEnded = true;
 
-    // TODO: create object for each player (name and score), and store in localStorage
-
-    // if adding new score, add to local stoarage
+    // store initials and score in localStorage
     // select `input` text tag with name="initials" and grab the value (user input initials)
-    if (document.querySelector("input[name='initials']").value) {
-        var inputInitials = document.querySelector("input[name='initials']").value;
-        localStorage.setItem("initials", inputInitials);
-
-        displayScoreboard();
+    var inputInitials = document.querySelector("input[name='initials']").value;
+    
+    if (localStorage.getItem("scores")) {
+        var scoresArr = localStorage.getItem("scores");
     }
+    else {
+        var scoresArr = [];
+    }
+
+    var newScore = inputInitials + " - " + timeLeft;
+
+    localStorage.setItem("scores", [...[scoresArr], newScore]);
+
+    displayScoreboard();
 
 };
 
@@ -279,14 +284,27 @@ function displayScoreboard() {
     result.style.display = "none";
     question.textContent = "High Scores";
 
-    // get initials and score from local storage
-    newScore.textContent = localStorage.getItem("initials") + " - " + localStorage.getItem("playerTime");
+    // get initials and score from local storage + display
+    if (localStorage.getItem("scores")) {
+        var scoreList = localStorage.getItem("scores").split(',');
 
-    // TODO: DISPLAY ALL SCORES IN LOCAL STORAGE SO FAR
-    // show scoreboard from local storage in doneContent
-    // doneContent = high scores in order
-    highScoresList.appendChild(newScore);
-    doneContent.appendChild(highScoresList);
+        for (var i=1; i < scoreList.length; i++) {
+            var li = document.createElement("li");
+            li.textContent = scoreList[i];
+            highScoresList.appendChild(li);
+        }
+
+        doneContent.appendChild(highScoresList);
+    }
+    else {
+        console.log("currently, no high scores!");
+    }
+
+    
+    //newScore.textContent = localStorage.getItem("scores");
+    // highScoresList.appendChild(newScore);
+
+    // doneContent = list of high scores in order
 
 
     // TODO: show "go back" and "clear high scores" buttons
