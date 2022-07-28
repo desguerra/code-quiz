@@ -1,3 +1,4 @@
+var scoresLinkEl = document.getElementById("view-scores");
 var timerEl = document.getElementById("timer");
 
 var title = document.getElementById("title");
@@ -212,6 +213,8 @@ function isCorrect(event) {
 
 /* when the game ends, show player score and ask them to input their initials */
 function endOfQuiz() {
+    gameEnded = true;
+
     console.log("end of quiz!");
 
     localStorage.setItem("playerTime", timeLeft);
@@ -242,10 +245,9 @@ function handleAddToScores(event) {
 
     event.preventDefault();
 
-    // add score to scoreboard
-    console.log("HIGH SCORES LIST");
+    gameEnded = true;
 
-    doneContent.textContent = "";
+    // TODO: create object for each player (name and score), and store in localStorage
 
     ///// if adding new score, add - otherwise, just display high scores (continue)
     // select `input` text tag with name="initials" and grab the value
@@ -254,25 +256,43 @@ function handleAddToScores(event) {
 
     //console.log(document.querySelector("input[name='initials']").value);
 
-    // TODO: create object for each player (name and score), and store in localStorage
+    
 
-    newScore.textContent = "[name] - " + localStorage.getItem("playerTime");
 
-    highScoresList.appendChild(newScore);
-    doneContent.appendChild(highScoresList);
+    displayScoreboard();
 
-    ////// display scoreboard //
-    // make sure to hide result text
+};
+
+function displayScoreboard() {
+    // add score to scoreboard
+    console.log("HIGH SCORES LIST");
+
+    doneContent.textContent = "";
+
+    title.style.display = "none";
+    instructions.style.display = "none";
+    startButton.style.display = "none";
+    choices.style.display = "none";
+
     result.style.display = "none";
     question.textContent = "High Scores";
 
+    // get initials and score from local storage
+    newScore.textContent = "[name] - " + localStorage.getItem("playerTime");
+
     // show scoreboard from local storage in doneContent
     // doneContent = high scores in order
+    highScoresList.appendChild(newScore);
+    doneContent.appendChild(highScoresList);
 
+    // TODO: DISPLAY ALL SCORES IN LOCAL STORAGE SO FAR
 };
 
 
 // start quiz when user clicks the start button
 startButton.addEventListener("click", hideInstructions);
+
+// click to view high scores
+scoresLinkEl.addEventListener("click", handleAddToScores);
 
 setUp();
